@@ -1,0 +1,112 @@
+{
+    "name": "Runner",
+    "maps": [
+        {
+            "name": "Movement",
+            "id": "4cd4b78f-0b88-44aa-92ff-132bada37bbe",
+            "actions": [
+                {
+                    "name": "Around",
+                    "type": "Value",
+                    "id": "c0b223a5-1dd9-4ec9-9c86-7d1be0d9ed7a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "2D Vector",
+                    "id": "60a7004a-6d37-4a84-95c0-200c9bda17c5",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Around",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "ab39ace4-783d-4ffe-b276-463bf8f74f8c",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Around",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "954333ed-08c4-42d2-b5db-f8dd7e086498",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Around",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "cd9db808-9be2-4bd7-b24a-a98dcd4e05fe",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Around",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "2f2eb96a-e0cf-4dfb-8b57-6fccb06a994a",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Around",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Jumping",
+            "id": "165a0c54-cf9b-4e81-8977-4d8e9c53d2f6",
+            "actions": [
+                {
+                    "name": "Rise",
+                    "type": "Button",
+                    "id": "2e15f810-5a8c-490a-a564-4a79c4f17ea3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6834cc2c-4753-4e84-a753-80cf0f525695",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rise",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Basic",
+            "bindingGroup": "Basic",
+            "devices": []
+        }
+    ]
+}
