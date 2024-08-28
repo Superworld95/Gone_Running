@@ -32,12 +32,13 @@ public class Pooling : MonoBehaviour
             poolDictionary.Add(pool.tag, objectPool);
         }
     }
-    public void SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    public void SpawnFromPool(string tag, Vector3 position, Quaternion rotation, Transform parent)
     {
         GameObject objToSpawn = poolDictionary[tag].Dequeue();
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
+        objToSpawn.transform.SetParent(parent);
         poolDictionary[tag].Enqueue(objToSpawn);
     }
 
