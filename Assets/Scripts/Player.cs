@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -34,10 +35,10 @@ public class Player : MonoBehaviour
         h = _runner.Movement.Around.ReadValue<Vector2>().x;
         if (player.position.x > 9F)
         {
-            player.velocity = new Vector3(-1f, player.velocity.y, player.velocity.z);
+            player.velocity = new Vector3(-player.position.x*2 - 9F, player.velocity.y, player.velocity.z);
         } else if (player.position.x < -9F)
         {
-            player.velocity = new Vector3(1f, player.velocity.y, player.velocity.z);
+            player.velocity = new Vector3(-player.position.x*2 - 9F, player.velocity.y, player.velocity.z);
         } else
         {
             player.velocity = new Vector3(h * spd, player.velocity.y, player.velocity.z);
@@ -90,20 +91,21 @@ public class Player : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
             canTeleport = true;
         }
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            print("You hit a wall!");
+            //print("You hit a wall!");
+            SceneManager.LoadScene("The Scene");
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
         }

@@ -241,8 +241,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3884192935561975930}
-  vel: 1
-  spd: 1
+  vel: 10
+  spd: 10
+  jumpHeight: 10
+  hTeleDist: 2
+  vTeleDist: 2
   _playerInput: {fileID: 2096553862149730420}
 --- !u!114 &2096553862149730420
 MonoBehaviour:

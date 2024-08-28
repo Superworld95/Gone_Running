@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
+using static Pooling;
 
 public class Pooling : MonoBehaviour
 {
+
     public Dictionary<string, Queue<GameObject>> poolDictionary;
     [System.Serializable]
     public class Pool
@@ -26,7 +29,7 @@ public class Pooling : MonoBehaviour
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
-            //poolDictionary.Add(pool.tag, objectPool);
+            poolDictionary.Add(pool.tag, objectPool);
         }
     }
     public void SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
@@ -38,14 +41,19 @@ public class Pooling : MonoBehaviour
         poolDictionary[tag].Enqueue(objToSpawn);
     }
 
-    public List<Pool> pool;
+    //public List<Pool> pool;
     public static Pooling Instance;
 
-    private void OnAwake()
+    void Awake()
     {
-        //Something is missing.
+        Instance = this;
     }
 
+    public void RecallToPool(GameObject t)
+    {
+        t.SetActive(false);
+        poolDictionary[tag].Enqueue(t);
+    }
 
     /* Code example.
      * public void SpawnThing() {
@@ -56,8 +64,5 @@ public class Pooling : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
