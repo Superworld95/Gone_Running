@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -42,7 +39,6 @@ public class Player : MonoBehaviour
         } else if (isPaused && _runner.Paused.Pause.triggered)
         {
             isPaused = false;
-            Debug.Log(_runner.Paused.Pause.triggered);
         }
         if (isPaused)
         {
@@ -95,7 +91,7 @@ public class Player : MonoBehaviour
             isJumping = false;
             player.velocity = new Vector3(player.velocity.x, player.velocity.y + jumpHeight, player.velocity.z);
             
-        } else if (isJumping && !isGrounded && canTeleport && player.velocity.y < 3f)
+        } else if (isJumping && !isGrounded && canTeleport && player.velocity.y < 5f)
         {
             portDust.Play();
             canTeleport = false;

@@ -1,18 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class Wallspot : MonoBehaviour
 {
     public Transform t, thePlayer;
-    //, tChild = null;
-    //private GameObject childObj;
-    //private int set = 0;
-    //public int setPoint = 0;
     int rounds = 0;
-
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +14,14 @@ public class Wallspot : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (thePlayer.position.z > 699)
+        {
+            rounds++;
+        }
+        if (rounds > 2)
+        {
+            rounds = 0;
+        }
         if ((t.position.z - thePlayer.position.z <= 100) && (t.position.z - thePlayer.position.z >= 0))
         {
             switch (t.name)
@@ -396,10 +395,6 @@ public class Wallspot : MonoBehaviour
                     }
                     break;
                 default: break;
-            }
-            if (t.position.z - thePlayer.position.z < 0)
-            {
-                rounds++;
             }
 
         }
