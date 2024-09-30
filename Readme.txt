@@ -10,6 +10,7 @@ Moon
 Particles on:
 Moon
 Player - running, jump, teleport
+Enemies
 
 Object Pooling:
 In the Pooler object, there are walls and enemies. In respective scripts, they are called when the player gets close.
