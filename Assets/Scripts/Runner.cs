@@ -122,6 +122,34 @@ public partial class @Runner: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Paused"",
+            ""id"": ""e7db7be4-f1d6-4061-82f5-d2ef53c69fe2"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b6c0100-2258-4d68-bad4-d67285165aa3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f2939a75-4913-4472-9a73-3ba58b0f2026"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -138,6 +166,9 @@ public partial class @Runner: IInputActionCollection2, IDisposable
         // Jumping
         m_Jumping = asset.FindActionMap("Jumping", throwIfNotFound: true);
         m_Jumping_Rise = m_Jumping.FindAction("Rise", throwIfNotFound: true);
+        // Paused
+        m_Paused = asset.FindActionMap("Paused", throwIfNotFound: true);
+        m_Paused_Pause = m_Paused.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -287,6 +318,52 @@ public partial class @Runner: IInputActionCollection2, IDisposable
         }
     }
     public JumpingActions @Jumping => new JumpingActions(this);
+
+    // Paused
+    private readonly InputActionMap m_Paused;
+    private List<IPausedActions> m_PausedActionsCallbackInterfaces = new List<IPausedActions>();
+    private readonly InputAction m_Paused_Pause;
+    public struct PausedActions
+    {
+        private @Runner m_Wrapper;
+        public PausedActions(@Runner wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_Paused_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Paused; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PausedActions set) { return set.Get(); }
+        public void AddCallbacks(IPausedActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PausedActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PausedActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IPausedActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IPausedActions instance)
+        {
+            if (m_Wrapper.m_PausedActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPausedActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PausedActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PausedActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PausedActions @Paused => new PausedActions(this);
     private int m_BasicSchemeIndex = -1;
     public InputControlScheme BasicScheme
     {
@@ -303,5 +380,9 @@ public partial class @Runner: IInputActionCollection2, IDisposable
     public interface IJumpingActions
     {
         void OnRise(InputAction.CallbackContext context);
+    }
+    public interface IPausedActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -1,25 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TimeCycle : MonoBehaviour
 {
     public Rigidbody playerToFollow;
-    private Light light;
+    public Transform l, childFollow;
+    public float r = 0;
     // Start is called before the first frame update
     void Start()
     {
-        light = GetComponent<Light>();
-        light.transform.position = playerToFollow.transform.position + new Vector3(0, 2, -10);
+        l = GetComponent<Transform>();
+        l.transform.position = playerToFollow.transform.position + new Vector3(0, 2, -10);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        light.transform.position = playerToFollow.transform.position;
-        light.transform.position = new Vector3(0, 2, light.transform.position.z);
-        light.transform.rotation = new Quaternion(light.transform.rotation.x + 1f, 0f, 0f, 0f);
+        l.transform.position = playerToFollow.transform.position;
+        l.transform.position = new Vector3(0, 2, l.transform.position.z);
+
+        l.transform.eulerAngles = new Vector3(r, 0, r);
+        r+=0.01f;        
     }
 }
 

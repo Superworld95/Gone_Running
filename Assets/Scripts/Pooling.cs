@@ -52,8 +52,9 @@ public class Pooling : MonoBehaviour
 
     public void RecallToPool(GameObject t)
     {
+        Debug.Log("Now is when the wall is recalled.");
         t.SetActive(false);
-        poolDictionary[tag].Enqueue(t);
+        //poolDictionary[tag].Enqueue(t);
     }
 
     /* Code example.

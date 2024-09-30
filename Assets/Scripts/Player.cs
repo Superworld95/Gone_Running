@@ -1,36 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody player;
-    public float vel = 2, spd = 2, jumpHeight = 2, hTeleDist = 2, vTeleDist = 2;
-    //public GameObject keyPlayer;
+    public float forSpd = 2, spd = 2, jumpHeight = 2, hTeleDist = 2, vTeleDist = 2;
     float h;
-    //bool isJumping = false, isGrounded = false, isRunning = false;
-    //public float jumpHeight = 1f, walkAcc = 1f, runAcc = 2f, walkSpeedLimit = 2f, runSpeedLimit = 4f;
-    //public Animator anim;
     [SerializeField] Runner _runner;
     [SerializeField] PlayerInput _playerInput;
-    bool isJumping = false, isGrounded = false, canTeleport = false;
+    bool isJumping = false, isGrounded = false, canTeleport = false, isPaused = false;
+    private Animator anim;
+    public ParticleSystem dustTrail, jumpDust, portDust;
+    int stylePoints = 0, hp = 20, maxHp = 0, trueScore = 0, rounds = 0;
+    public TMP_Text health, score, pause;
     // Start is called before the first frame update
     void Start()
     {
         _runner = new Runner();
         _runner.Enable();
         player = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
+        dustTrail.Stop();
+        jumpDust.Stop();
+        portDust.Stop();
+        health.text = "1";
+        score.text = "1";
+        maxHp = hp;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //print(h);
+        if (!isPaused && _runner.Paused.Pause.triggered)
+        {
+            isPaused = true;
+        } else if (isPaused && _runner.Paused.Pause.triggered)
+        {
+            isPaused = false;
+            Debug.Log(_runner.Paused.Pause.triggered);
+        }
+        if (isPaused)
+        {
+            Time.timeScale = 0;
+            pause.text = "PAUSED";
+        }
+        else
+        {
+            Time.timeScale = 1;
+            pause.text = " ";
+        }
+    }
+    void FixedUpdate()
+    {
+        
+        if (health != null && score != null)
+        {
+            health.text = "Health: " + hp.ToString() + "/"+maxHp;
+            if (rounds > 0)
+            {
+                score.text = "Round: " + (rounds+1).ToString() + "   Score: " + Mathf.Floor((trueScore + player.position.z + stylePoints)).ToString();
+            } else
+            {
+                score.text = "Score: " + Mathf.Floor((trueScore + player.position.z + stylePoints)).ToString();
+            }
+        }
         if (player.velocity.z < spd)
         {
-            player.velocity = Vector3.forward * vel;
+            player.velocity = Vector3.forward * forSpd;
         }
         h = _runner.Movement.Around.ReadValue<Vector2>().x;
         if (player.position.x > 9F)
@@ -43,38 +84,20 @@ public class Player : MonoBehaviour
         {
             player.velocity = new Vector3(h * spd, player.velocity.y, player.velocity.z);
         }
-        /*if (player.velocity.x < vel && player.velocity.x > -vel && player.position.x < 9F && player.position.x > -9F)
-        {
-            if (h == 1)
-            {
-                //anim.SetTrigger("Walking");
-            }
-            else if (h == -1)
-            {
-                //Enable walk left.
-            }
-            player.velocity = new Vector3(h * spd, player.velocity.y, player.velocity.z);
-        }
-        else
-        {
-            if (player.position.x < 9 && h == 1)
-            {
-                player.velocity = new Vector3(h * spd, player.velocity.y, player.velocity.z);
-            }
-            else if (player.position.x > -9F && h == -1)
-            {
-                player.velocity = new Vector3(h * spd, player.velocity.y, player.velocity.z);
-            }            
-        }*/
+
         isJumping = _runner.Jumping.Rise.inProgress;
         if (isJumping && isGrounded)
         {
+            dustTrail.Stop();
+            jumpDust.Play();
+            anim.SetTrigger("Jump");
             isGrounded = false;
             isJumping = false;
             player.velocity = new Vector3(player.velocity.x, player.velocity.y + jumpHeight, player.velocity.z);
-            //anim.SetTrigger("Jumping");
-        } else if (isJumping && !isGrounded && canTeleport && player.position.y > 3f)
+            
+        } else if (isJumping && !isGrounded && canTeleport && player.velocity.y < 3f)
         {
+            portDust.Play();
             canTeleport = false;
             isJumping = false;
             if (h == 1)
@@ -88,17 +111,52 @@ public class Player : MonoBehaviour
                 player.position = new Vector3(player.position.x, player.position.y + vTeleDist, player.position.z);
             }
         }
+        if (player.position.z > 700)
+        {
+            trueScore += 700;
+            rounds++;
+            player.position = new Vector3(0, player.position.y, player.position.z - 700f);
+            forSpd++;
+            maxHp += 20;
+            hp += 25;
+        }
+        if (hp > maxHp)
+        {
+            hp = maxHp;
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
             canTeleport = true;
+            anim.SetTrigger("Land");
+            jumpDust.Stop();
+            portDust.Stop();
         }
-        if (collision.gameObject.CompareTag("Wall"))
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            //print("You hit a wall!");
+            isGrounded = true;
+            dustTrail.Play();
+        }
+        if (collision.gameObject.CompareTag("Wall") && player.velocity.z <= 1)
+        {
+            SceneManager.LoadScene("The Scene");
+        } else if (collision.gameObject.CompareTag("Wall")) {
+            isGrounded = true;
+            dustTrail.Play();
+            stylePoints++;
+        }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            hp--;
+        }
+        if (hp <= 0)
+        {
             SceneManager.LoadScene("The Scene");
         }
     }
@@ -108,6 +166,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+            dustTrail.Stop();
         }
     }
 }

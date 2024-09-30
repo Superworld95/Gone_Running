@@ -6,84 +6,403 @@ using UnityEngine.Pool;
 
 public class Wallspot : MonoBehaviour
 {
-    private Transform t, tChild = null;
-    public Transform thePlayer;
-    private GameObject obj, childObj;
-    bool set1 = false, set2 = false, set3 = false;
-    public void SpawnThing(string h, Transform b) {
-        //Debug.Log(t.name+" spawns a wall!");
-        //Debug.Log(t.position.z - thePlayer.position.z);
-        Pooling.Instance.SpawnFromPool(h, b.transform.position, b.transform.rotation, b);
-    }
-    public void RemoveThing(GameObject b)
-    {
-        Debug.Log(t.position.z - thePlayer.position.z);
-        Pooling.Instance.RecallToPool(b);
-    }
+    public Transform t, thePlayer;
+    //, tChild = null;
+    //private GameObject childObj;
+    //private int set = 0;
+    //public int setPoint = 0;
+    int rounds = 0;
 
-     
 
     // Start is called before the first frame update
     void Start()
     {
-        t = GetComponent<Transform>();    
+        t = GetComponent<Transform>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
-        if (t.position.z - thePlayer.position.z <= 130 && t.position.z - thePlayer.position.z >= 0 && set1 == false)
+        if ((t.position.z - thePlayer.position.z <= 100) && (t.position.z - thePlayer.position.z >= 0))
         {
             switch (t.name)
             {
                 case "Wall Spot A":
-                    SpawnThing("TwoSide", t);
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
                     break;
                 case "Wall Spot B":
-                    SpawnThing("LowGround", t);
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
                     break;
                 case "Wall Spot C":
-                    SpawnThing("MiddleWall", t);
-                    break;
-            }
-            set1 = true;
-        }
-        else if (t.position.z - thePlayer.position.z <= 160 && t.position.z - thePlayer.position.z >= 135 && set2 == false)
-        {
-            switch (t.name)
-            {
-                case "Wall Spot A":
-                    RemoveThing(childObj);
-                    break;
-                case "Wall Spot B":
-                    RemoveThing(childObj);
-                    break;
-                case "Wall Spot C":
-                    RemoveThing(childObj);
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
                     break;
                 case "Wall Spot D":
-                    SpawnThing("TwoSide", t);
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
                     break;
                 case "Wall Spot E":
-                    SpawnThing("LowGround", t);
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
                     break;
                 case "Wall Spot F":
-                    SpawnThing("MiddleWall", t);
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
                     break;
+
+                case "Wall Spot G":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot H":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot I":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot J":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot K":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot L":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+
+                case "Wall Spot M":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot N":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot O":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot P":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot Q":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot R":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+
+                case "Wall Spot S":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot T":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot U":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot V":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot W":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot X":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+
+                case "Wall Spot Y":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                case "Wall Spot Z":
+                    switch (rounds % 3)
+                    {
+                        case 0:
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 1:
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            break;
+                        case 2:
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            break;
+                    }
+                    break;
+                default: break;
             }
-            set2 = true;
-        }
-        if (set1 && (t.name == "Wall Spot A" || t.name == "Wall Spot B" || t.name == "Wall Spot C") && tChild == null && t.GetChild(0) != null)
-        {
-            tChild = t.GetChild(0);
-            //tChild = GetComponent<Transform>;
-            childObj = tChild.gameObject;
-        }
-        if (set2 && (t.name == "Wall Spot D" || t.name == "Wall Spot E" || t.name == "Wall Spot F") && tChild == null && t.GetChild(0) != null)
-        {
-            tChild = t.GetChild(0);
-            childObj = tChild.gameObject;
+            if (t.position.z - thePlayer.position.z < 0)
+            {
+                rounds++;
+            }
+
         }
     }
 }
+
