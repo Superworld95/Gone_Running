@@ -14,7 +14,7 @@ public class Wallspot : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (thePlayer.position.z > 699)
+        if (thePlayer.position.z >= 800)
         {
             rounds++;
         }
@@ -103,7 +103,7 @@ public class Wallspot : MonoBehaviour
                             Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
                             break;
                         case 1:
-                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
+                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
                             break;
                         case 2:
                             Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
@@ -118,7 +118,7 @@ public class Wallspot : MonoBehaviour
                             Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
                             break;
                         case 1:
-                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
+                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
                             break;
                         case 2:
                             Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
@@ -132,7 +132,7 @@ public class Wallspot : MonoBehaviour
                             Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
                             break;
                         case 1:
-                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
+                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
                             break;
                         case 2:
                             Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
@@ -203,7 +203,7 @@ public class Wallspot : MonoBehaviour
                             Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
                             break;
                         case 1:
-                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
                             break;
                         case 2:
                             Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
@@ -384,13 +384,13 @@ public class Wallspot : MonoBehaviour
                     switch (rounds % 3)
                     {
                         case 0:
-                            Pooling.Instance.SpawnFromPool("MiddleWall2", t.transform.position, t.transform.rotation, t);
+                            Pooling.Instance.SpawnFromPool("MiddleWall", t.transform.position, t.transform.rotation, t);
                             break;
                         case 1:
-                            Pooling.Instance.SpawnFromPool("LowGround2", t.transform.position, t.transform.rotation, t);
+                            Pooling.Instance.SpawnFromPool("LowGround", t.transform.position, t.transform.rotation, t);
                             break;
                         case 2:
-                            Pooling.Instance.SpawnFromPool("TwoSide2", t.transform.position, t.transform.rotation, t);
+                            Pooling.Instance.SpawnFromPool("TwoSide", t.transform.position, t.transform.rotation, t);
                             break;
                     }
                     break;
